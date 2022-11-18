@@ -1,4 +1,6 @@
 import React from "react";
+import {useState} from "react";
+
 function Modal({onClick}) {
   return (
     <div className="modal-dialog">
@@ -37,26 +39,23 @@ return (
   );
 }
 
-class App extends React.PureComponent {
-  state={
-    close:""
-  }
-onClick=()=>{
-this.setState({close:"close"})
+function App() {
+  const [close, setClose] = useState("");
+
+const onClick=()=>{
+setClose("close")
 }
-onOpen=()=>{
-  this.setState({close:""})
+const onOpen=()=>{
+  setClose("")
 }
-  render(){
     return(
       <div>
-      <Notification onClick={this.onOpen}/>
-      <div className={this.state.close}><Modal  onClick={this.onClick}/></div>
+      <Notification onClick={onOpen}/>
+      <div className={close}><Modal  onClick={onClick}/></div>
       </div>
     )
   }
   
-}
 
 
 export default App;
