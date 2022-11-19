@@ -58,6 +58,7 @@ function App() {
     return () => {};
   }, [keyname]);
   const onOpen = () => {
+    setKeyname("")
     setClose("");
   };
   return (
