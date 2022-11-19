@@ -1,7 +1,7 @@
-import React from "react";
-import {useState} from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
-function Modal({onClick}) {
+function Modal({ onClick }) {
   return (
     <div className="modal-dialog">
       <div className="modal-content">
@@ -17,7 +17,7 @@ function Modal({onClick}) {
           </p>
         </div>
         <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" onClick={onClick} >
+          <button type="button" className="btn btn-secondary" onClick={onClick}>
             Закрыть
           </button>
         </div>
@@ -25,8 +25,8 @@ function Modal({onClick}) {
     </div>
   );
 }
-function Notification({onClick}){
-return (
+function Notification({ onClick }) {
+  return (
     <div className="app">
       <div className="modal-dialog">
         <div className="modal-content">
@@ -41,21 +41,33 @@ return (
 
 function App() {
   const [close, setClose] = useState("");
+  const [keyname, setKeyname] = useState("");
 
-const onClick=()=>{
-setClose("close")
-}
-const onOpen=()=>{
-  setClose("")
-}
-    return(
-      <div>
-      <Notification onClick={onOpen}/>
-      <div className={close}><Modal  onClick={onClick}/></div>
+  const onClick = () => {
+    setClose("close");
+  };
+
+  useEffect(() => {
+    function keyPres(event) {
+      setKeyname(event.key);
+    }
+    window.addEventListener("keydown", keyPres);
+    if (keyname == "Escape") {
+      onClick();
+    }
+    return () => {};
+  }, [keyname]);
+  const onOpen = () => {
+    setClose("");
+  };
+  return (
+    <div>
+      <Notification onClick={onOpen} />
+      <div className={close}>
+        <Modal onClick={onClick} />
       </div>
-    )
-  }
-  
-
+    </div>
+  );
+}
 
 export default App;
